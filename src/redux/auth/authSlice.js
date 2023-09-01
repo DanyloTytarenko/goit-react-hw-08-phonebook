@@ -13,6 +13,7 @@ const authSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(signUpThunk.fulfilled, (state, { payload }) => {
+        console.log(payload);
         state.user = payload.user;
         state.token = payload.token;
         state.isLoggedIn = true;
