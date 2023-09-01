@@ -1,25 +1,26 @@
 import { useAuth } from 'hooks';
 import { useDispatch } from 'react-redux';
-import { logOut } from 'redux/auth/operations';
+import { logOutThunk } from 'redux/auth/authOperations';
+import { Greeting, MailWrapper, UserMenuWrapper } from './UserMenu.styled';
+import { Button } from '@mui/material';
 
-const UserMenu = () => {
-  const { user } = useAuth();
+export const UserMenu = () => {
   const dispatch = useDispatch();
-
-  const handleLogOut = () => dispatch(logOut());
+  const { user } = useAuth();
 
   return (
-    <div className="hidden lg:flex lg:flex-1 lg:justify-end ">
-      <p className="text-sm font-semibold text-gray-900 mx-1">{user.name}</p>
-      <button
+    <UserMenuWrapper>
+      <Greeting>
+        Welcome, <MailWrapper>{user.email}</MailWrapper>
+      </Greeting>
+      <Button
+        className="custom-button"
+        color="inherit"
         type="button"
-        onClick={handleLogOut}
-        className="text-sm font-semibold text-gray-900 ml-0.5 hover:text-indigo-600"
+        onClick={() => dispatch(logOutThunk())}
       >
-        LogOut <span aria-hidden="true">&rarr;</span>
-      </button>
-    </div>
+        Logout
+      </Button>
+    </UserMenuWrapper>
   );
 };
-
-export default UserMenu;
